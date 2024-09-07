@@ -37,19 +37,16 @@ void AddToStartup()
         if (result == ERROR_SUCCESS)
         {
             printf("Program added to startup.\n");
-            MessageBox(NULL, "Program successfully added to startup.", "Success", MB_OK | MB_ICONINFORMATION);
         }
         else
         {
             fprintf(stderr, "Failed to add program to startup.\n");
-            MessageBox(NULL, "Failed to add program to startup.", "Error", MB_OK | MB_ICONERROR);
         }
         RegCloseKey(hKey);
     }
     else
     {
         fprintf(stderr, "Unable to open registry key.\n");
-        MessageBox(NULL, "Unable to open registry key.", "Error", MB_OK | MB_ICONERROR);
     }
 }
 
@@ -82,14 +79,9 @@ int main(int argc, char* argv[])
     }
 
     // Thiết lập giá trị keyrate
-    if (SystemParametersInfo(SPI_SETFILTERKEYS, 0, (LPVOID)&keys, 0))
-    {
-        MessageBox(NULL, "Keyrate successfully set.", "Success", MB_OK | MB_ICONINFORMATION);
-    }
-    else
+    if (!SystemParametersInfo(SPI_SETFILTERKEYS, 0, (LPVOID)&keys, 0))
     {
         fprintf(stderr, "System call failed.\nUnable to set keyrate.");
-        MessageBox(NULL, "Unable to set keyrate.", "Error", MB_OK | MB_ICONERROR);
     }
 
     return 0;
